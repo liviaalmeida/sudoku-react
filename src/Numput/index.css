@@ -1,0 +1,20 @@
+.numput {
+  width: 35px;
+  height: 35px;
+  border: 1px solid lightgray;
+  text-align: center;
+}
+
+.numput:focus {
+	outline: 3px solid darkblue;
+	border: 1px solid darkblue;
+}
+
+.numput.highlight {
+	background-color: #eeeefe;
+}
+
+.numput.immutable {
+	font-weight: 700;
+	cursor: default;
+}
