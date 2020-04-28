@@ -9,7 +9,7 @@ export default function App() {
     <div className="App">
       <header>
         <img src={logo} className="App-logo" alt="logo" width="100"/>
-        <h1>Sudoku React</h1>
+        <h1>Sudoku</h1>
       </header>
       {
         <Game/>
