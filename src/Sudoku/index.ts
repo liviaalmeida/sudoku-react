@@ -7,7 +7,6 @@ import { BoardAPI } from "../API"
 export class Sudoku {
 	private static undoStack: ActionStack
 	private static redoStack: ActionStack
-	
 	public static initial: Board
 	public static board: Board
 
@@ -21,6 +20,24 @@ export class Sudoku {
 
 	private static cleanStacks() {
 		Sudoku.undoStack = new ActionStack()
+		Sudoku.redoStack = new ActionStack()
+	}
+
+	static async load() {
+		console.log(Sudoku)
+		Sudoku.cleanStacks()
+		Sudoku.initial = await BoardAPI.newBoard()
+		Sudoku.board = Board.copy(Sudoku.initial)
+	}
+
+	static reset() {
+		Sudoku.cleanStacks()
+		Sudoku.board = Board.copy(Sudoku.initial)
+	}
+
+	static setValue({ row, column }: index2d, value: svalue) {
+		Sudoku.saveCurrent({row,column})
+		Sudoku.board[row][column] = value
 		Sudoku.redoStack = new ActionStack()
 	}
 
@@ -52,23 +69,5 @@ export class Sudoku {
 		Sudoku.saveCurrent(index)
 
 		Sudoku.board[index.row][index.column] = value
-	}
-
-	static async load() {
-		console.log(Sudoku)
-		Sudoku.cleanStacks()
-		Sudoku.initial = await BoardAPI.newBoard()
-		Sudoku.board = Board.copy(Sudoku.initial)
-	}
-
-	static setValue({ row, column }: index2d, value: svalue) {
-		Sudoku.saveCurrent({row,column})
-		Sudoku.board[row][column] = value
-		Sudoku.redoStack = new ActionStack()
-	}
-
-	static reset() {
-		Sudoku.cleanStacks()
-		Sudoku.board = Board.copy(Sudoku.initial)
 	}
 }
