@@ -119,7 +119,6 @@ export class Game extends React.Component<any, State> {
 
 	render() {
 		const loading = this.state.loading
-
 		return loading ? (<div className="loading"></div>) : (
 			<div className="game">
 				{ this.renderGame() }
