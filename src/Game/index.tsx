@@ -84,16 +84,22 @@ export class Game extends React.Component<any, State> {
 		})
 	}
 
-	renderButtons() {
+	renderUndoRedo() {
 		return (
-			<div className="buttons">
+			<div className="buttons undo-redo">
+				<button onClick={() => this.undo()} disabled={!Sudoku.canUndo}>undo</button>
+				<button onClick={() => this.redo()} disabled={!Sudoku.canRedo}>redo</button>
+			</div>
+		)
+	}
+
+	renderControls() {
+		return (
+			<div className="buttons controls">
 				<button onClick={() => this.loadBoard()}>new</button>
 				<button onClick={() => this.resetBoard()}>reset</button>
 				<button onClick={() => {}}>autofill</button>
 				<button onClick={() => {}}>validate</button>
-				<br/>
-				<button onClick={() => this.undo()} disabled={!Sudoku.canUndo}>undo</button>
-				<button onClick={() => this.redo()} disabled={!Sudoku.canRedo}>redo</button>
 			</div>
 		)
 	}
@@ -126,10 +132,11 @@ export class Game extends React.Component<any, State> {
 
 	render() {
 		const loading = this.state.loading
-		return loading ? (<div className="loading"></div>) : (
+		return (
 			<div className="game">
-				{ this.renderGame() }
-				{ this.renderButtons() }
+				{ this.renderControls() }
+				{ loading ? (<div className="loading"></div>) :this.renderGame() }
+				{ this.renderUndoRedo() }
 			</div>
 		)
 	}

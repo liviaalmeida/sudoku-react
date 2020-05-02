@@ -10,6 +10,9 @@
 }
 
 .numput {
+  font-family: VT323;
+  font-size: 22px;
+  color: darkslategray;
   width: 35px;
   height: 35px;
   border: 1px solid lightgray;
@@ -26,6 +29,7 @@
 }
 
 .numput.immutable {
-	font-weight: 700;
+  font-weight: 700;
+  color: black;
 	cursor: default;
 }

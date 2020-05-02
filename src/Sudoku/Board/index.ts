@@ -1,7 +1,10 @@
+const Array9 = (callback: (value: any, index: number) => any) => Array.from({ length: 9 }, callback)
+
 export default class Board extends Array<Array<string>> {
+	static values: string[] =  Array9((_, index) => String(index + 1))
+	
 	constructor() {
-		const iterable = { length: 9 }
-		super(...Array.from(iterable, () => Array.from(iterable, () => '')))
+		super(...Array9(() => Array9(() => '')))
 	}
 
 	static copy(board: Board): Board {
