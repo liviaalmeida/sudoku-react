@@ -44,6 +44,12 @@ export class Game extends React.Component<any, State> {
     this.stopLoading()
 	}
 
+	resetBoard = async () => {
+		this.startLoading()
+		await Sudoku.reset()
+		this.stopLoading()
+	}
+
 	undo = async () => {
     this.startLoading()
 		await Sudoku.undo()
@@ -82,7 +88,7 @@ export class Game extends React.Component<any, State> {
 		return (
 			<div className="buttons">
 				<button onClick={() => this.loadBoard()}>new</button>
-				<button onClick={() => Sudoku.reset()}>reset</button>
+				<button onClick={() => this.resetBoard()}>reset</button>
 				<button onClick={() => {}}>autofill</button>
 				<button onClick={() => {}}>validate</button>
 				<br/>
