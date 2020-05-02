@@ -6,27 +6,19 @@ type Props = {
 	column: number
 	highlight: boolean
 	onChange: (row: number, column: number, value: string) => void
-	onInputFocus: (row: number, column: number) => void
-	onInputBlur: () => void
-	defaultValue?: string
+	onFocus: (row: number, column: number) => void
+	onBlur: () => void
+	defaultValue: string
 	currentValue: string
+	immutable: boolean
 }
 
 type State = {
-	value?: string
-	immutable?: boolean
+	immutable: boolean
 }
 
 export class Numput extends React.Component<Props, State> {
-	constructor(props: Props) {
-		super(props)
-		this.state = {
-			value: props.currentValue || undefined,
-			immutable: props.defaultValue !== undefined,
-		}
-	}
-
-	onChangeCallback = (value: string) => {
+	onChange = (value: string) => {
 		if (this.props.onChange) {
 			this.props.onChange(
 				this.props.row,
@@ -36,9 +28,29 @@ export class Numput extends React.Component<Props, State> {
 		}
 	}
 
+	onKeyDownCallback = (key: string, target: HTMLInputElement) => {
+		const assignInput = (value: string, input: HTMLInputElement) => {
+			input.value = value
+		}
+
+		const isBackspace = key === 'Backspace'
+		const isDigit = /\d{1}/.test(key)
+		const valueChanged = target.value !== key
+
+		if (isBackspace) {
+			assignInput('', target)
+		} else if (isDigit && valueChanged) {
+			assignInput(key, target)
+		} else {
+			return
+		}
+
+		this.onChange(key)
+	}
+
 	onFocusCallback = () => {
-		if (this.props.onInputFocus) {
-			this.props.onInputFocus(
+		if (this.props.onFocus) {
+			this.props.onFocus(
 				this.props.row,
 				this.props.column
 			)
@@ -46,34 +58,32 @@ export class Numput extends React.Component<Props, State> {
 	}
 	
 	onBlurCallback = () => {
-		if (this.props.onInputBlur) {
-			this.props.onInputBlur()
+		if (this.props.onBlur) {
+			this.props.onBlur()
 		}
 	}
 
 	render() {
+		const value = this.props.currentValue
 		const highlight = this.props.highlight
-		const immutable = this.state.immutable || false
+		const immutable = this.props.immutable
 		const className = 'numput'
 				.concat(immutable ? ' immutable' : '')
 				.concat(highlight ? ' highlight' : '')
     return (
-      <input min="1" max="9"
+			<input min="1" max="9"
+				defaultValue={value}
+				onChange={() => {}}
 				className={className}
-        size={1} maxLength={1} type="text"
-				value={this.state.value}
-        readOnly={immutable}
-        onChange={({ target }) => {
-					const value = target.value;
-					this.onChangeCallback(value);
+				size={1} type="number"
+				readOnly={immutable}
+				onKeyDown={(event) => {
+					event.preventDefault()
+					const { key, target } = event
+					this.onKeyDownCallback(key, target as HTMLInputElement)
 				}}
-				onFocus={() => {
-					this.onFocusCallback();
-				}}
-				onBlur={() => {
-					this.onBlurCallback();
-				}}
-				pattern="\d"
+				onFocus={() => this.onFocusCallback()}
+				onBlur={() => this.onBlurCallback()}
 			/>
     )
   }

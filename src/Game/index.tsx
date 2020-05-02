@@ -103,12 +103,13 @@ export class Game extends React.Component<any, State> {
 						row.map((value, ci) => (
 							<Numput row={ri} column={ci}
 								key={`${ri}-${ci}`}
-								defaultValue={value}
+								defaultValue={value ? value : ''}
+								immutable={value !== undefined}
 								currentValue={board[ri][ci] as string}
 								highlight={this.state.highlight[ri][ci]}
 								onChange={this.onInputChange}
-								onInputFocus={this.onInputFocus}
-								onInputBlur={this.onInputBlur}
+								onFocus={this.onInputFocus}
+								onBlur={this.onInputBlur}
 							/>
 						))
 					}</div>

@@ -1,9 +1,8 @@
 import index2d from "../index2d"
-import svalue from "../svalue"
 
 type Action = {
 	index: index2d
-  value: svalue
+  value: string
 }
 
 export default class ActionStack extends Array<Action> {

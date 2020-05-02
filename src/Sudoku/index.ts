@@ -1,6 +1,5 @@
 import ActionStack from './ActionStack'
 import index2d from './index2d'
-import svalue from './svalue'
 import Board from './Board'
 import { BoardAPI } from "../API"
 
@@ -24,7 +23,6 @@ export class Sudoku {
 	}
 
 	static async load() {
-		console.log(Sudoku)
 		Sudoku.cleanStacks()
 		Sudoku.initial = await BoardAPI.newBoard()
 		Sudoku.board = Board.copy(Sudoku.initial)
@@ -35,7 +33,7 @@ export class Sudoku {
 		Sudoku.board = Board.copy(Sudoku.initial)
 	}
 
-	static setValue({ row, column }: index2d, value: svalue) {
+	static setValue({ row, column }: index2d, value: string) {
 		Sudoku.saveCurrent({row,column})
 		Sudoku.board[row][column] = value
 		Sudoku.redoStack = new ActionStack()
