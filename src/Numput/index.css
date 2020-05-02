@@ -1,3 +1,14 @@
+.numput::-webkit-outer-spin-button,
+.numput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.numput[type=number] {
+  -moz-appearance: textfield;
+}
+
 .numput {
   width: 35px;
   height: 35px;
