@@ -17,6 +17,7 @@
   height: 35px;
   border: 1px solid lightgray;
   text-align: center;
+  background-color: white;
 }
 
 .numput:focus {
@@ -24,12 +25,17 @@
 	border: 1px solid darkblue;
 }
 
-.numput.highlight {
+.numput.highlight, .numput.highlight:read-only {
 	background-color: #eeeefe;
 }
 
-.numput.immutable {
+.numput.invalid {
+  background-color: indianred;
+}
+
+.numput:read-only {
   font-weight: 700;
+  background-color: white;
   color: black;
 	cursor: default;
 }

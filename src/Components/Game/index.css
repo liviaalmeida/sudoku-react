@@ -9,6 +9,7 @@
 
 .loading {
   display: inline-block;
+  position: absolute;
   width: 50px;
   height: 50px;
   border: 3px dotted darkblue;
@@ -19,11 +20,16 @@
 
 .game {
   display: inline-block;
+  position: relative;
 }
 
 .sudoku {
 	display: inline-block;
   outline: 2px solid black;
+}
+
+.sudoku.hidden {
+  visibility: hidden;
 }
 
 .sudoku .numput:nth-child(3n):not(:last-of-type) {
@@ -34,7 +40,13 @@
 	border-bottom: 1px solid black;
 }
 
-.buttons button {
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controls button {
   font-family: VT323;
   font-size: 20px;
   border-radius: 10px;
@@ -46,21 +58,20 @@
   margin: 10px 0px;
 }
 
-.buttons button:focus {
+.controls button:focus {
   box-shadow: 0px -2px 5px 0px rgb(85,85,85);
   outline: 1px solid transparent;
 }
 
-.buttons button:disabled {
+.controls button:disabled {
   background-color: lightgray;
   box-shadow: none;
 }
 
-.buttons.undo-redo button {
-  margin: 10px 5px;
+.controls button:last-of-type {
+  margin-left: 10px;
 }
 
-.buttons.controls {
-  display: flex;
-  justify-content: space-between;
+.controls.undo-redo button {
+  margin: 10px 5px;
 }

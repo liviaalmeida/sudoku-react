@@ -1,0 +1,19 @@
+.checkbox {
+	display: inline-flex;
+	font-size: 20px;
+	align-items: center;
+	opacity: .7;
+	transition: all 1s ease;
+}
+
+.checkbox:hover, .checkbox.checked {
+	opacity: 1;
+}
+
+.checkbox input {
+	margin: 0;
+}
+
+.checkbox span {
+	margin-left: 5px;
+}

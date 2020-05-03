@@ -11,41 +11,25 @@ type Props = {
 	defaultValue: string
 	currentValue: string
 	immutable: boolean
+	valid: boolean
 }
 
-type State = {
-	immutable: boolean
-}
+export class Numput extends React.Component<Props> {
+	onKeyDownCallback = (key: string, target: HTMLInputElement) => {
+		const valueChanged = target.value !== key
+		if (key === '0') return
+		if (!valueChanged) return
 
-export class Numput extends React.Component<Props, State> {
-	onChange = (value: string) => {
+		target.value = key
+		const value = key
+
 		if (this.props.onChange) {
 			this.props.onChange(
 				this.props.row,
 				this.props.column,
-				value
+				value,
 			)
 		}
-	}
-
-	onKeyDownCallback = (key: string, target: HTMLInputElement) => {
-		const assignInput = (value: string, input: HTMLInputElement) => {
-			input.value = value
-		}
-
-		const isBackspace = key === 'Backspace'
-		const isDigit = /\d{1}/.test(key)
-		const valueChanged = target.value !== key
-
-		if (isBackspace) {
-			assignInput('', target)
-		} else if (isDigit && valueChanged) {
-			assignInput(key, target)
-		} else {
-			return
-		}
-
-		this.onChange(key)
 	}
 
 	onFocusCallback = () => {
@@ -67,9 +51,11 @@ export class Numput extends React.Component<Props, State> {
 		const value = this.props.currentValue
 		const highlight = this.props.highlight
 		const immutable = this.props.immutable
+		const valid = this.props.valid
 		const className = 'numput'
 				.concat(immutable ? ' immutable' : '')
 				.concat(highlight ? ' highlight' : '')
+				.concat(valid ? '' : ' invalid')
     return (
 			<input min="1" max="9"
 				defaultValue={value}
@@ -78,6 +64,7 @@ export class Numput extends React.Component<Props, State> {
 				size={1} type="number"
 				readOnly={immutable}
 				onKeyDown={(event) => {
+					if (this.props.immutable) return
 					event.preventDefault()
 					const { key, target } = event
 					this.onKeyDownCallback(key, target as HTMLInputElement)
