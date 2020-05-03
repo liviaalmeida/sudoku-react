@@ -5,8 +5,10 @@ type Action = {
   value: string
 }
 
-export default class ActionStack extends Array<Action> {
-	add(action: Action) {
+export type ActionBatch = Action[]
+
+export default class ActionStack extends Array<Action | ActionBatch> {
+	add(action: Action | ActionBatch) {
 		this.unshift(action)
 	}
 
